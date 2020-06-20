@@ -1,27 +1,56 @@
 extends layout
 
 block content
-  h1 Hackathon Starter
-  p.lead A boilerplate for Node.js web applications.
-  hr
-  .row
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-secondary(href='#', role='button') View details »
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-secondary(href='#', role='button') View details »
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-secondary(href='#', role='button') View details »
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-secondary(href='#', role='button') View details »
+  <p class="h1 ">Slintel Project</p>
+  p.lead Upload image and generate thumbnail.
+
+  if user && user.image
+    .form-group.row.justify-content-md-center
+      label.col-sm-3.col-form-label.text-right.font-weight-bold
+      .col-sm-7
+        img(src=user.image, class='profile', width='200', height='200', alt=((user.profile.name || user.email || user.id)))
+    .row
+    .row
+
+  if user && !user.image
+    form.form-horizontal(action = '/upload', class="md-form" method='POST', enctype='multipart/form-data')
+      .form-group.row.justify-content-md-center
+        label.col-sm-3.col-form-label.text-right.font-weight-bold
+        .col-sm-7
+      input(type='file', name='imageupload', required = true)
+      input(type='submit', name='uploadimage', value='Upload Image')
+      //<div class="input-group mb-3">
+      //<div class="custom-file">
+      //<input type="file" name='imageupload', required = true class="custom-file-input" id="inputGroupFile02">
+      //<label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
+      //</div>
+      //<div class="input-group-append">
+      //<button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Upload Image</button>
+      //</div>
+      //</div>
+  if user && user.image
+      form.form-horizontal(action = '/thumbnail', method='POST')
+        input(type='hidden', name='imagePath', value=user.image)
+        .row
+          .col-sm-6
+            .form-group
+              .row
+              .row
+              label.control-label.requiredField(for='resolution')
+                | Resolution Type
+              .col-xs-12
+                select#resolution.select.form-control.input-lg(name='resolution', class="custom-select", required=true)
+                  option(value={height: 10, width: 10}) 10 * 10
+                  option(value={height: 20, width: 20}) 20 * 20
+                  option(value={height: 50, width: 50}) 50 * 50
+
+        input(type='submit',  class="btn btn-primary" value='Generate Thumbnail')
+
+  if user && user.thumbnail
+    .form.-group.row
+    .row
+    .form-group.row.justify-content-md-center
+        img(src=user.thumbnail.thumbnailPath, class='profile', width=user.thumbnail.width, height=user.thumbnail.height, alt=((user.profile.name || user.email || user.id)))
+    .form-group.row.justify-content-md-center
+        <input type="text" style="width: 30%" value=#{user.thumbnail.thumbnailPath} id="myInput">
+        <button type="button" class="btn btn-primary" onclick="myFunction()">Copy Link</button>

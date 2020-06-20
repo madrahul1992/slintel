@@ -85,4 +85,8 @@ userSchema.methods.gravatar = function (size: number = 200) {
     return `https://gravatar.com/avatar/${md5}?s=${size}&d=retro`;
 };
 
+userSchema.methods.getImage = (size: number = 1000) => {
+    return `https://gravatar.com/avatar/?s=${size}&d=retro`;
+};
+
 export const User = mongoose.model<UserDocument>("User", userSchema);

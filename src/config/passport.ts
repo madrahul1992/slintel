@@ -61,8 +61,8 @@ passport.use(new LocalStrategy({ usernameField: "email" }, (email, password, don
  * Sign in with Facebook.
  */
 passport.use(new FacebookStrategy({
-    clientID: process.env.FACEBOOK_ID,
-    clientSecret: process.env.FACEBOOK_SECRET,
+    clientID: "2280945152207762",
+    clientSecret: "c2b021c1931162404bcb138c96b691f0",
     callbackURL: "/auth/facebook/callback",
     profileFields: ["name", "email", "link", "locale", "timezone"],
     passReqToCallback: true
@@ -121,6 +121,7 @@ passport.use(new FacebookStrategy({
  * Login Required middleware.
  */
 export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
+    console.log("Is it here");
     if (req.isAuthenticated()) {
         return next();
     }
