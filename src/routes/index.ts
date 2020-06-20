@@ -13,6 +13,8 @@ import * as passportConfig from "../config/passport";
  * Primary router routes.
  */
 router.get("/", homeController.index);
+router.get("/thumbnail", homeController.index);
+router.get("/upload", homeController.index);
 router.post("/upload", passportConfig.isAuthenticated, upload, imageController.imageUpload);
 router.post("/thumbnail", passportConfig.isAuthenticated, imageController.generateThumbnail);
 router.get("/login", userController.getLogin);
